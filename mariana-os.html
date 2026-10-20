@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>marianaOS</title>
+<style>
+:root{--bg:#0b1220;--bg2:#16233d;--glass:rgba(30,41,59,.55);--bd:rgba(255,255,255,.1);--tx:#e5e7eb;--mut:#9ca3af;--win:#111a2c;--ac:#2f7bff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+:root[data-theme="light"]{--bg:#e8eefc;--bg2:#fff;--glass:rgba(255,255,255,.7);--bd:rgba(0,0,0,.1);--tx:#0f172a;--mut:#475569;--win:#fff}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]):not([data-theme="light"]){--bg:#e8eefc;--bg2:#fff;--glass:rgba(255,255,255,.7);--bd:rgba(0,0,0,.1);--tx:#0f172a;--mut:#475569;--win:#fff}}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--tx);font-family:Outfit,system-ui,-apple-system,"Segoe UI",sans-serif}
+#desk{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0,var(--bg2),var(--bg) 70%)}
+button{font:inherit;color:inherit;cursor:pointer}
+#bar{position:absolute;top:env(safe-area-inset-top,0px);left:0;right:0;height:46px;display:flex;align-items:center;gap:6px;padding:0 20px;background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);font-size:15px;z-index:900}
+#bar .logo{font-weight:700;margin-right:12px;display:flex;gap:8px;align-items:center}
+#bar button{background:none;border:0;padding:6px 10px;border-radius:6px}
+#bar button:hover{background:var(--bd)}
+#bar .r{margin-left:auto;display:flex;gap:14px;align-items:center;font-size:14px}
+.col{position:absolute;top:calc(70px + env(safe-area-inset-top,0px));display:flex;flex-direction:column;gap:22px}
+.col.l{left:30px}.col.rt{right:30px}
+.ic{width:96px;background:none;border:0;text-align:center;font-size:14px;line-height:1.15}
+.sq{width:78px;height:78px;margin:0 auto 6px;border-radius:20px;display:grid;place-items:center;border:1px solid var(--bd)}
+.sq svg,.dk svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.c1{background:#352b6b;color:#a78bfa}.c2{background:#134e4a;color:#34d399}.c3{background:#1e3a6e;color:#60a5fa}.c4{background:#164e63;color:#22d3ee}.c5{background:#4a3226;color:#fb923c}.c6{background:#3b3426;color:#fbbf24}.c7{background:#4c2530;color:#f87171}.c8{background:#14403a;color:#34d399}
+#dock{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;padding:10px 14px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--bd);border-radius:26px;z-index:900}
+.dk{width:60px;height:60px;border-radius:16px;border:1px solid var(--bd);display:grid;place-items:center;transition:transform .15s}
+.dk:hover{transform:translateY(-6px) scale(1.08)}
+.dk svg{width:28px;height:28px}
+.sep{width:1px;background:var(--bd);margin:4px 2px}
+.dn{background:var(--glass);color:var(--tx)}
+.win{position:absolute;width:min(520px,94vw);max-height:62%;display:none;flex-direction:column;background:var(--win);border:1px solid var(--bd);border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,.45);overflow:hidden}
+.win.open{display:flex}
+.tb{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--glass);cursor:grab;user-select:none;touch-action:none;font-size:14px;font-weight:600}
+.tb b{flex:1}.x{width:14px;height:14px;border-radius:50%;background:#ef4444;border:0;padding:0}
+.bd{padding:18px;overflow:auto;font-size:14px;line-height:1.6}
+.bd h2{margin:0 0 8px;font-size:20px}.bd p{margin:0 0 10px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.chip{padding:4px 12px;border-radius:99px;border:1px solid var(--bd);font-size:12px}
+.card{border:1px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:10px}.card h3{margin:0 0 2px;font-size:15px}.card small{color:var(--mut)}
+a{color:var(--ac)}
+.ok{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)}.ok i{color:#34d399;font-style:normal}
+#modal{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.35);z-index:1000}
+#modal.hide{display:none}
+.mc{position:relative;width:min(420px,90vw);text-align:center;padding:34px 28px 28px;background:var(--win);border:1px solid var(--bd);border-radius:26px}
+.mc .app{width:84px;height:84px;margin:0 auto 14px;border-radius:22px;background:linear-gradient(135deg,#3b82f6,#2563eb);display:grid;place-items:center;color:#fff}
+.mc .app svg{width:40px;height:40px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mc h3{margin:0 0 8px;font-size:20px}.mc p{margin:0 0 20px;color:var(--mut);font-size:15px}
+kbd{padding:2px 8px;border:1px solid var(--bd);border-radius:6px;font-size:13px}
+.go{width:100%;padding:14px;border:0;border-radius:10px;background:#0a73ff;color:#fff;font-size:16px}
+.mc .cl{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:0;background:var(--bd)}
+@media(max-width:700px){#bar .m,#bar .r span.h{display:none}.col.l{left:8px}.col.rt{right:8px;top:calc(70px + env(safe-area-inset-top,0px))}.ic{width:80px;font-size:12px}.sq{width:62px;height:62px}.dk{width:46px;height:46px}#dock{gap:6px;padding:8px}.win{left:3vw!important;top:90px!important}}
+</style>
+</head>
+<body>
+<div id="desk">
+  <div id="bar"><span class="logo">💻 marianaOS</span><span class="m" id="menu"></span>
+    <div class="r"><span class="h">🔊 &nbsp;📶 &nbsp;🌐 PT</span><span id="clock"></span></div></div>
+  <div class="col l" id="L"></div><div class="col rt" id="R"></div>
+  <div id="dock"></div>
+
+  <div class="win" id="sobre" style="left:150px;top:80px"><div class="tb"><b>Sobre Mim</b><button class="x" aria-label="Fechar"></button></div><div class="bd"><h2>Olá, eu sou a Mariana 👋</h2><p>Profissional de TI com experiência em desenvolvimento, suporte e automação, atuando com JavaScript, PHP, Python, SQL, APIs REST, Git/GitHub e Cloud (AWS/Azure).</p><p>Desenvolvi e mantive soluções que otimizaram processos, reduziram tarefas manuais e aumentaram a eficiência operacional. Perfil analítico, proativo e com facilidade para aprender novas tecnologias.</p></div></div>
+  <div class="win" id="stack" style="left:190px;top:110px"><div class="tb"><b>Stack Técnica</b><button class="x" aria-label="Fechar"></button></div><div class="bd"><h3 style="margin:0 0 6px;font-size:14px">Linguagens</h3><div class="chips"><span class="chip">JavaScript</span><span class="chip">Python</span><span class="chip">PHP</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">SQL</span><span class="chip">Java (fundamentos)</span></div><h3 style="margin:0 0 6px;font-size:14px">Frameworks &amp; Dev</h3><div class="chips"><span class="chip">Node.js</span><span class="chip">React</span><span class="chip">APIs REST</span><span class="chip">n8n</span></div><h3 style="margin:0 0 6px;font-size:14px">Banco de Dados</h3><div class="chips"><span class="chip">MySQL</span><span class="chip">SQL Server</span><span class="chip">Relacionais</span></div><h3 style="margin:0 0 6px;font-size:14px">Cloud &amp; Infra</h3><div class="chips"><span class="chip">AWS</span><span class="chip">Azure</span><span class="chip">Google Cloud</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">GitHub Actions</span><span class="chip">Azure DevOps</span><span class="chip">Terraform</span></div><h3 style="margin:0 0 6px;font-size:14px">DevOps &amp; Ferramentas</h3><div class="chips"><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">CI/CD</span><span class="chip">Linux</span><span class="chip">Bash</span></div><h3 style="margin:0 0 6px;font-size:14px">Dados &amp; BI</h3><div class="chips"><span class="chip">Power BI</span><span class="chip">Looker Studio</span><span class="chip">Excel</span></div><h3 style="margin:0 0 6px;font-size:14px">Processos</h3><div class="chips"><span class="chip">Kanban</span><span class="chip">Ágil</span><span class="chip">Troubleshooting</span><span class="chip">Análise de Logs</span><span class="chip">SLA</span></div><h3 style="margin:0 0 6px;font-size:14px">Segurança</h3><div class="chips"><span class="chip">LGPD</span><span class="chip">Segurança da Informação</span></div></div></div>
+  <div class="win" id="experiencia" style="left:230px;top:140px"><div class="tb"><b>Experiência</b><button class="x" aria-label="Fechar"></button></div><div class="bd"><div class="card"><h3>Analista de Suporte</h3><small>Sennda Software · Rio de Janeiro, RJ · 2024 – Atual</small><p style="margin:8px 0 0">Atendimento técnico e gestão de chamados com cumprimento de SLA; troubleshooting, análise de logs e diagnóstico de incidentes; consultas SQL; apoio ao time de desenvolvimento em correções e novas funcionalidades; monitoramento de estabilidade e performance; documentação de incidentes e soluções.</p></div><div class="card"><h3>Analista Administrativo</h3><small>Prefeitura de São João · RJ · 2020 – 2025</small><p style="margin:8px 0 0">Organização de documentos e processos, atendimento ao público, controle e análise de dados em planilhas e acompanhamento de processos administrativos.</p></div><div class="card"><h3>Estágio na área da Saúde</h3><small>Hemorio e Hospital Municipal Piedade · RJ · 2021 – 2023</small><p style="margin:8px 0 0">Apoio técnico e operacional em rotinas laboratoriais, com organização, atenção aos detalhes e responsabilidade.</p></div></div></div>
+  <div class="win" id="formacao" style="left:270px;top:170px"><div class="tb"><b>Formação</b><button class="x" aria-label="Fechar"></button></div><div class="bd"><div class="card"><h3>Ciência da Computação (cursando)</h3><small>Faculdade de Ciência da Computação · Nova Iguaçu, RJ</small><p style="margin:8px 0 0">Algoritmos, Estrutura de Dados, Engenharia de Software, Banco de Dados, Web, APIs REST, Redes, Cloud, Segurança, Git e Fundamentos de DevOps.</p></div><div class="card"><h3>Pós-graduação em Hematologia e Imuno-hematologia</h3><small>Faculdade Única</small></div><div class="card"><h3>Pós-graduação em Saúde Pública com ênfase em Saúde da Família</h3><small>Faculdade Única</small></div><div class="card"><h3>Graduação em Biomedicina</h3><small>Universidade Estácio de Sá</small></div></div></div>
+  <div class="win" id="projetos" style="left:310px;top:200px"><div class="tb"><b>Projetos</b><button class="x" aria-label="Fechar"></button></div><div class="bd"><h2>Em breve 🚧</h2><p>Meus projetos de desenvolvimento e automação estarão aqui. Enquanto isso, acompanhe meu trabalho no LinkedIn.</p><a href="https://www.linkedin.com/in/marianasilva20a/" target="_blank" rel="noopener">Ver LinkedIn →</a></div></div>
+  <div class="win" id="readme" style="left:120px;top:70px;width:min(700px,94vw)"><div class="tb"><b>readme.txt</b><button class="x" aria-label="Fechar"></button></div><div class="bd"><pre style="margin:0;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;color:var(--tx);overflow-x:auto">================================================================================
+  README.TXT — BEM-VINDO AO MARIANA OS (v2.0)
+  Portfólio Interativo &amp; Experiência Desktop • MARIANA SILVA
+================================================================================
+
+[ DICA DE OURO: EXPERIÊNCIA COMPLETA EM TELA CHEIA (F11) ]
+--------------------------------------------------------------------------------
+Para ter a experiência completa de um sistema operacional desktop,
+pressione a tecla [ F11 ] no seu teclado!
+
+Dessa forma, as barras do seu navegador são ocultadas e o marianaOS ocupa
+100% da sua tela, ativando recursos como:
+
+  • Barra de tarefas dinâmica com auto-hide ao encostar o mouse na borda inferior;
+  • Janelas maximizadas ocupando toda a área de trabalho;
+  • Transições fluidas e movimentação livre de janelas e ícones.
+
+--------------------------------------------------------------------------------
+[ 📱 ACESSO MOBILE: EXPERIÊNCIA DEDICADA ESTILO IPHONE ]
+--------------------------------------------------------------------------------
+Você sabia que este portfólio possui uma versão mobile completa estilo iOS?
+
+Acesse este mesmo link no seu celular (ou redimensione a janela do seu
+navegador para menos de 768px de largura) para vivenciar:
+
+  • Interface mobile com Dock translúcida, Home Indicator e widgets de perfil;
+  • Multitarefa fluido no estilo App Switcher do iOS com navegação por abas;
+  • Janelas em formato Bottom Sheet modal com gestos táteis e pull-to-dismiss;
+  • Filtros deslizáveis com affordance de blur na Stack Técnica.
+
+--------------------------------------------------------------------------------
+[ PRINCIPAIS RECURSOS &amp; FUNCIONALIDADES ]
+--------------------------------------------------------------------------------
+
+1. ÁREA DE TRABALHO &amp; ÍCONES LIVRES:
+   - Você pode arrastar e soltar livremente qualquer ícone pela tela.
+   - Clique com o botão direito no papel de parede para:
+       * Alinhar todos os ícones à grade automaticamente;
+       * Alternar entre Modo Escuro e Modo Claro.
+
+2. GERENCIAMENTO DE JANELAS:
+   - Mova as janelas arrastando pela barra de título superior.
+   - Redimensione pelas bordas e cantos inferiores.
+   - Controle pelas bolinhas superiores:
+       * [x] Fechar janela;
+       * [-] Minimizar para a barra de tarefas;
+       * [+] Maximizar em tela cheia (cobre toda a tela abaixo da barra superior).
+
+3. BARRA DE TAREFAS DINÂMICA (DOCK):
+   - Estilo híbrido Windows &amp; macOS.
+   - Apps abertos aparecem na barra de tarefas mesmo se não estiverem fixados.
+   - Ao fechar uma janela que não estava fixada, ela sai da barra automaticamente.
+   - Clique com o botão direito nos ícones da barra para:
+       * Fechar janela;
+       * Fixar ou Desafixar da barra de tarefas;
+       * Restaurar atalhos padrão.
+   - Em janelas maximizadas, a barra se recolhe e reaparece ao aproximar o mouse
+     da borda inferior da tela.
+
+4. SISTEMA DE ÁUDIO &amp; SONS DO SISTEMA:
+   - Feedback sonoro em ações como abrir, fechar e minimizar janelas.
+   - Controle de volume, silenciar (mute) e teste de áudio pelo ícone na barra
+     de menus superior.
+
+5. BILINGUISMO (PT / EN):
+   - Alterne o idioma a qualquer momento clicando no botão PT/EN no canto superior.
+   - Todas as janelas, textos e termos do sistema são adaptados em tempo real.
+
+6. CURRÍCULO &amp; PROJETOS NATIVOS:
+   - Abra o arquivo &quot;currículo.pdf&quot; para visualizar o documento PDF oficial
+     embutido diretamente em uma janela nativa.
+   - Explore as seções de Experiência, Stack Técnica, Formação e Projetos.</pre></div></div>
+  <div class="win" id="curriculo" style="left:390px;top:260px"><div class="tb"><b>currículo.pdf</b><button class="x" aria-label="Fechar"></button></div><div class="bd"><h2>Currículo</h2><p>Perfil completo, experiência e formação.</p><a href="https://www.linkedin.com/in/marianasilva20a/" target="_blank" rel="noopener">Ver perfil no LinkedIn →</a></div></div>
+  <div class="win" id="status" style="left:430px;top:290px"><div class="tb"><b>Status Check</b><button class="x" aria-label="Fechar"></button></div><div class="bd"><h2>Status Check</h2><p>Painel de monitoramento em tempo real da saúde de serviços de IA e plataformas de desenvolvimento, criado por mim.</p><div class="ok">Portfólio<i>● online</i></div><div class="ok">Aberta a oportunidades em TI<i>● sim</i></div><p style="margin:14px 0 0"><a href="https://status-check-eosin.vercel.app/" target="_blank" rel="noopener">Abrir Status Check →</a></p></div></div>
+</div>
+
+<div id="modal"><div class="mc"><button class="cl" id="mx" aria-label="Fechar">✕</button>
+  <div class="app"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+  <h3>Modo Tela Cheia Recomendado</h3><p>Para aproveitar a experiência completa do sistema operacional no desktop, pressione <kbd>F11</kbd> ou clique abaixo.</p>
+  <button class="go" id="fs">Entrar em Tela Cheia</button></div></div>
+
+<script>
+const $=s=>document.querySelector(s);let z=10;
+const I={user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',cpu:'<rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/>',job:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',grad:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',dir:'<path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',file:'<path d="M6 3h8l5 5v13H6z"/><path d="M9 13h6M9 17h6"/>',act:'<path d="M3 12h4l3-8 4 16 3-8h4"/>',gh:'<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',li:'<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'};
+const svg=k=>`<svg viewBox="0 0 24 24">${I[k]}</svg>`;
+const L=[["sobre","Sobre Mim","user","c1"],["stack","Stack Técnica","cpu","c2"],["experiencia","Experiência","job","c3"],["formacao","Formação","grad","c4"],["projetos","Projetos","dir","c5"]];
+const R=[["readme","readme.txt","file","c6"],["curriculo","currículo.pdf","file","c7"],["status","Status Check","act","c8"]];
+const ic=([id,n,k,c])=>`<button class="ic" data-o="${id}"><div class="sq ${c}">${svg(k)}</div>${n}</button>`;
+$("#L").innerHTML=L.map(ic).join("");$("#R").innerHTML=R.map(ic).join("");
+$("#menu").innerHTML=[["sobre","Sobre"],["stack","Stack"],["experiencia","Experiência"],["formacao","Formação"],["projetos","Projetos"]].map(([i,n])=>`<button data-o="${i}">${n}</button>`).join("");
+const lk=(h,k)=>`<a class="dk dn" href="${h}" target="_blank" rel="noopener">${svg(k)}</a>`;
+$("#dock").innerHTML=L.map(([id,,k,c])=>`<button class="dk ${c}" data-o="${id}" aria-label="${id}">${svg(k)}</button>`).join("")+'<div class="sep"></div>'+lk("#","gh")+lk("https://www.linkedin.com/in/marianasilva20a/","li")+lk("mailto:marianasilva20a@gmail.com","mail")+`<button class="dk dn" id="th" aria-label="Tema">${svg("sun")}</button>`;
+function open(id){const w=document.getElementById(id);w.classList.add("open");w.style.zIndex=++z}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-o]");if(b)open(b.dataset.o)});
+document.querySelectorAll(".win").forEach(w=>{
+ w.addEventListener("pointerdown",()=>w.style.zIndex=++z);
+ w.querySelector(".x").onclick=()=>w.classList.remove("open");
+ const t=w.querySelector(".tb");let ox,oy,d=0;
+ t.onpointerdown=e=>{if(e.target.className==="x")return;d=1;ox=e.clientX-w.offsetLeft;oy=e.clientY-w.offsetTop;t.setPointerCapture(e.pointerId)};
+ t.onpointermove=e=>{if(d){w.style.left=Math.max(0,e.clientX-ox)+"px";w.style.top=Math.max(50,e.clientY-oy)+"px"}};
+ t.onpointerup=()=>d=0});
+$("#th").onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==="light"?"dark":"light"};
+$("#mx").onclick=()=>$("#modal").classList.add("hide");
+$("#fs").onclick=()=>{try{document.documentElement.requestFullscreen()}catch(e){}$("#modal").classList.add("hide")};
+const tick=()=>$("#clock").textContent=new Date().toLocaleString("pt-BR",{weekday:"short",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});tick();setInterval(tick,30000);
+open("sobre");
+</script>
+</body>
+</html>

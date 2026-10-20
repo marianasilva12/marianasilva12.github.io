@@ -1,0 +1,335 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Entre Luas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: coluna de app de celular, abas fixas embaixo; cada parceira tem sua cor (coral / jade) */
+:root{
+  --bg:#fbf6f4; --surface:#ffffff; --soft:#f3e9e7; --fg:#2b1d22; --muted:#7a6469; --line:#e8dad7;
+  --a:#e0584f; --a-soft:#fbe1dd; --b:#1f8a7a; --b-soft:#d5efe9; --fert:#c48a1e; --fert-soft:#f8ecd2;
+  --display:"Young Serif",Georgia,"Times New Roman",serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1b1316; --surface:#251b1f; --soft:#30242a; --fg:#f6ebee; --muted:#b39ea4; --line:#3b2d33;
+  --a:#ff7a6e; --a-soft:#4a2624; --b:#4fc2ae; --b-soft:#1d3a35; --fert:#e5ad45; --fert-soft:#3d3020; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1b1316; --surface:#251b1f; --soft:#30242a; --fg:#f6ebee; --muted:#b39ea4; --line:#3b2d33;
+  --a:#ff7a6e; --a-soft:#4a2624; --b:#4fc2ae; --b-soft:#1d3a35; --fert:#e5ad45; --fert-soft:#3d3020; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+.app{max-width:460px;margin:0 auto;padding-inline:16px;padding-block:20px 110px;display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance}
+h1{font-size:1.9rem;line-height:1.1}
+h2{font-size:1.3rem}
+.eyebrow{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.date{color:var(--muted);font-size:.9rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.who{border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.who.a{background:var(--a-soft)} .who.b{background:var(--b-soft)}
+.who .name{font-weight:700;display:flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.dot.a{background:var(--a)} .dot.b{background:var(--b)}
+.ring{width:96px;height:96px;margin:6px auto}
+.big{font-family:var(--display);font-size:1.15rem;line-height:1.2}
+.small{font-size:.85rem;color:var(--muted)}
+.chip{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.78rem;font-weight:600;background:var(--surface);border:1px solid var(--line)}
+.sync{display:flex;gap:14px;align-items:center}
+.sync .n{font-family:var(--display);font-size:2.2rem;line-height:1;font-variant-numeric:tabular-nums}
+.tips{display:flex;flex-direction:column;gap:10px}
+.tip{display:flex;gap:10px;align-items:flex-start}
+.tip p{margin:0}
+/* calendário */
+.calhead{display:flex;justify-content:space-between;align-items:center}
+.iconbtn{background:var(--soft);border:0;color:var(--fg);width:36px;height:36px;border-radius:50%;font-size:1.1rem;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:12px;font-variant-numeric:tabular-nums}
+.wd{text-align:center;font-size:.72rem;color:var(--muted);font-weight:600;padding-bottom:4px}
+.day{aspect-ratio:1;max-width:100%;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:.88rem;background:transparent;border:0;color:var(--fg);cursor:pointer;position:relative}
+.day.out{opacity:.3}
+.day.today{outline:2px solid var(--fg);outline-offset:-2px}
+.day.sel{background:var(--soft)}
+.marks{display:flex;gap:3px;height:6px}
+.m{width:6px;height:6px;border-radius:50%}
+.m.pa{background:var(--a)} .m.pb{background:var(--b)}
+.m.fa{border:1.5px solid var(--a)} .m.fb{border:1.5px solid var(--b)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.8rem;color:var(--muted);margin-top:12px}
+.legend span{display:flex;align-items:center;gap:6px}
+/* registrar */
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--soft);border-radius:99px;padding:4px}
+.seg button{border:0;background:transparent;padding:9px;border-radius:99px;font:inherit;font-weight:600;color:var(--muted);cursor:pointer}
+.seg button.on{background:var(--surface);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:99px;padding:7px 13px;font:inherit;font-size:.88rem;cursor:pointer}
+.tag.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+label{font-size:.85rem;font-weight:600;display:block;margin-bottom:6px}
+input,textarea{width:100%;box-sizing:border-box;font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+textarea{min-height:70px;resize:vertical}
+.field{display:flex;flex-direction:column}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{border:0;border-radius:99px;padding:13px 18px;font:inherit;font-weight:700;background:var(--fg);color:var(--bg);cursor:pointer;width:100%}
+.btn.ghost{background:var(--soft);color:var(--fg)}
+.stack{display:flex;flex-direction:column;gap:14px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(86px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:600;font-size:.9rem}
+.log{display:flex;flex-direction:column;gap:8px}
+.log .entry{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+.log .entry:first-child{border-top:0}
+/* abas */
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:8px 16px calc(8px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center}
+nav .tabs{display:grid;grid-template-columns:repeat(4,1fr);max-width:460px;width:100%}
+nav button{border:0;background:transparent;color:var(--muted);font:inherit;font-size:.75rem;font-weight:600;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+nav button svg{width:22px;height:22px}
+nav button.on{color:var(--fg)}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+.note{font-size:.8rem;color:var(--muted)}
+/* tela Hoje no estilo destaque */
+.hero{margin:-20px -16px 0;padding:14px 16px 34px;display:flex;flex-direction:column;gap:14px;border-radius:0 0 50% 50% / 0 0 44px 44px;
+  background:linear-gradient(180deg,var(--soft) 0%,var(--h1) 38%,var(--h2) 100%)}
+.hero.a{--h1:var(--a-soft);--h2:color-mix(in srgb,var(--a) 58%,var(--a-soft))}
+.hero.b{--h1:var(--b-soft);--h2:color-mix(in srgb,var(--b) 58%,var(--b-soft))}
+.bar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px}
+.bar .date{text-align:center;color:var(--fg);font-weight:600;font-size:1rem}
+.avs{display:flex}
+.av{width:36px;height:36px;border-radius:50%;border:2px solid var(--surface);font:inherit;font-weight:700;font-size:.85rem;color:#fff;cursor:pointer;opacity:.55;padding:0}
+.av+.av{margin-left:-8px}
+.av.a{background:var(--a)} .av.b{background:var(--b)}
+.av.on{opacity:1;position:relative;z-index:1;box-shadow:0 0 0 2px var(--fg)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-variant-numeric:tabular-nums}
+.wk{border:0;background:transparent;color:var(--fg);font:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:0}
+.wl{font-size:.66rem;font-weight:700;letter-spacing:.06em;color:var(--muted)}
+.wn{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
+.hero.a .wk.per .wn{background:var(--a);color:#fff}
+.hero.b .wk.per .wn{background:var(--b);color:#fff}
+.wk.fer .wn{border:2px dashed var(--fert)}
+.wk.now .wn{box-shadow:0 0 0 3px var(--surface),0 0 0 5px currentColor;font-weight:700}
+.wk.now .wl{color:var(--fg)}
+.focus{text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;padding-block:22px 6px}
+.focus .lbl{font-weight:600;font-size:1.05rem}
+.focus .huge{font-family:var(--display);font-size:3.2rem;line-height:1.05}
+.focus .sub{font-size:.88rem;color:var(--fg);opacity:.8}
+.pill{margin-top:14px;border:0;background:var(--surface);color:var(--fg);font:inherit;font-weight:700;font-size:.85rem;padding:9px 18px;border-radius:99px;cursor:pointer}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{font-family:var(--body);font-weight:700;font-size:1.05rem}
+.rail{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory;margin-inline:-16px;padding-inline:16px}
+.st{flex:none;width:118px;height:150px;border-radius:16px;border:0;padding:12px 10px;font:inherit;color:var(--fg);display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;cursor:pointer;scroll-snap-align:start;font-weight:600;font-size:.85rem;line-height:1.25}
+.st.s1{background:var(--surface);border:1px solid var(--line)}
+.st.s2{background:var(--b-soft)} .st.s2.fa{background:var(--a-soft)}
+.st.s3{background:var(--fert-soft)}
+.st.s4{background:var(--soft)}
+.plus{width:34px;height:34px;border-radius:50%;background:var(--a);color:#fff;font-size:1.4rem;line-height:34px}
+.drop{width:70px;height:70px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--surface);display:flex;align-items:center;justify-content:center}
+.drop span{transform:rotate(45deg);font-family:var(--display);font-size:2rem}
+.st .mid{font-family:var(--display);font-size:1.05rem;font-weight:400}
+.st .num{font-family:var(--display);font-size:2.4rem;font-weight:400;line-height:1}
+@media (prefers-reduced-motion:no-preference){.ring circle{transition:stroke-dashoffset .6s ease}}
+</style>
+
+<div class="app" id="app"></div>
+<nav><div class="tabs">
+  <button data-tab="hoje" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>Hoje</button>
+  <button data-tab="cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Calendário</button>
+  <button data-tab="reg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>Registrar</button>
+  <button data-tab="aj"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg>Nós duas</button>
+</div></nav>
+
+<script>
+const DAY=864e5;
+const iso=d=>{const x=new Date(d);return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")};
+const parse=s=>{const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
+const today=parse(iso(new Date()));
+const fmt=(d,o)=>d.toLocaleDateString("pt-BR",o||{day:"numeric",month:"short"});
+
+// Dados de exemplo (marcados como exemplo até a pessoa editar em "Nós duas")
+const sample={example:true,
+  a:{name:"Você",start:iso(new Date(today-9*DAY)),cycle:28,period:5},
+  b:{name:"Ela",start:iso(new Date(today-20*DAY)),cycle:30,period:4},
+  logs:{}};
+let S;
+try{S=JSON.parse(localStorage.getItem("entreluas"))||sample}catch(e){S=sample}
+const save=()=>{try{localStorage.setItem("entreluas",JSON.stringify(S))}catch(e){}};
+
+let tab="hoje", who="a", calMonth=new Date(today.getFullYear(),today.getMonth(),1), selDay=iso(today);
+
+function info(p,date){
+  const L=+p.cycle||28,P=+p.period||5,st=parse(p.start);
+  const diff=Math.floor((date-st)/DAY);
+  const d=((diff%L)+L)%L+1;
+  const ov=L-14, fs=ov-5, fe=ov+1;
+  let phase,key;
+  if(d<=P){phase="Menstruação";key="men"}
+  else if(d===ov){phase="Ovulação";key="ov"}
+  else if(d>=fs&&d<=fe){phase="Janela fértil";key="fert"}
+  else if(d<fs){phase="Fase folicular";key="fol"}
+  else{phase="Fase lútea";key="lut"}
+  const toNext=L-d+1;
+  return{d,L,P,phase,key,toNext,next:new Date(+date+toNext*DAY),fertile:d>=fs&&d<=fe,period:d<=P};
+}
+
+const TIPS={
+  men:["Ofereça bolsa de água quente e um chá; cólica costuma ser mais forte nos primeiros dias.","Combine um programa caseiro e leve, sem cobrança de energia.","Deixe absorventes ou coletor sempre à mão em casa."],
+  fol:["A energia tende a subir: bom momento para planos novos juntas.","Proponha uma atividade física a dois ou um passeio."],
+  fert:["Libido e disposição costumam estar em alta nesses dias.","Se vocês planejam engravidar por inseminação, esta é a janela para acompanhar com a médica."],
+  ov:["Dia provável da ovulação. Algumas pessoas sentem uma pontada de um lado do ventre.","Ótimo dia para um encontro especial."],
+  lut:["TPM pode aparecer: mais paciência e menos cobrança ajudam.","Comida reconfortante e uma noite de sono boa fazem diferença.","Pergunte como ela está antes de presumir que é \"hormônio\"."]
+};
+const MOODS=["Calma","Feliz","Sensível","Irritada","Ansiosa","Cansada","Com tesão","Triste"];
+const SYMS=["Cólica","Dor de cabeça","Inchaço","Seios doloridos","Acne","Desejo de doce","Insônia","Fluxo leve","Fluxo intenso"];
+
+function ring(p,i,color){
+  const r=40,c=2*Math.PI*r,frac=i.d/i.L;
+  const per=i.P/i.L, ovA=(i.L-14-0.5)/i.L;
+  return `<svg class="ring" viewBox="0 0 100 100" role="img" aria-label="Dia ${i.d} de ${i.L}">
+   <circle cx="50" cy="50" r="${r}" fill="none" stroke="var(--line)" stroke-width="9"/>
+   <circle cx="50" cy="50" r="${r}" fill="none" stroke="${color}" stroke-opacity=".35" stroke-width="9" stroke-dasharray="${per*c} ${c}" transform="rotate(-90 50 50)"/>
+   <circle cx="50" cy="50" r="${r}" fill="none" stroke="${color}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-frac)}" transform="rotate(-90 50 50)"/>
+   <circle cx="${50+r*Math.cos(2*Math.PI*ovA-Math.PI/2)}" cy="${50+r*Math.sin(2*Math.PI*ovA-Math.PI/2)}" r="4" fill="var(--fert)"/>
+   <text x="50" y="47" text-anchor="middle" font-family="Young Serif, Georgia, serif" font-size="22" fill="var(--fg)">${i.d}</text>
+   <text x="50" y="63" text-anchor="middle" font-size="9.5" fill="var(--muted)">de ${i.L} dias</text></svg>`;
+}
+
+function syncCount(){
+  let both=0,first=null;
+  for(let k=0;k<90;k++){const d=new Date(+today+k*DAY);if(info(S.a,d).period&&info(S.b,d).period){both++;if(!first)first=d}}
+  return{both,first};
+}
+
+let focus="a";
+function viewHoje(){
+  const p=S[focus], i=info(p,today), o=focus==="a"?"b":"a", io=info(S[o],today), sy=syncCount();
+  const ws=new Date(+today-today.getDay()*DAY);
+  const week=[...Array(7)].map((_,k)=>{const d=new Date(+ws+k*DAY),x=info(p,d),now=iso(d)===iso(today);
+    return `<button class="wk ${x.period?"per":""} ${x.fertile&&!x.period?"fer":""} ${now?"now":""}" data-day="${iso(d)}" data-goto="cal" aria-label="${fmt(d,{day:"numeric",month:"long"})}"><span class="wl">${now?"HOJE":"DSTQQSS"[k]}</span><span class="wn">${d.getDate()}</span></button>`}).join("");
+  const ov=i.L-14-i.d;
+  let lbl,huge,sub;
+  if(i.period){lbl="Menstruação:";huge=`${i.d}º dia`;sub=`Deve terminar em ${fmt(new Date(+today+(i.P-i.d)*DAY))}`}
+  else if(i.key==="ov"){lbl="Ovulação:";huge="hoje";sub="Alta chance de engravidar"}
+  else if(i.fertile){lbl="Janela fértil:";huge=ov>0?`ovulação em ${ov} dia${ov>1?"s":""}`:"últimos dias";sub="Alta chance de engravidar"}
+  else{lbl="Menstruação em:";huge=`${i.toNext} dia${i.toNext>1?"s":""}`;sub=`Previsão para ${fmt(i.next,{day:"numeric",month:"long"})}`}
+  const ini=n=>esc((n||"?").trim().charAt(0).toUpperCase());
+  return `
+  <div class="hero ${focus}">
+    <div class="bar">
+      <div class="avs"><button class="av a ${focus==="a"?"on":""}" data-focus="a" aria-label="Ver ciclo de ${esc(S.a.name)}">${ini(S.a.name)}</button><button class="av b ${focus==="b"?"on":""}" data-focus="b" aria-label="Ver ciclo de ${esc(S.b.name)}">${ini(S.b.name)}</button></div>
+      <div class="date">${fmt(today,{day:"numeric",month:"long"})}</div>
+      <button class="iconbtn" data-tab="cal" aria-label="Abrir calendário" style="background:var(--surface)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></button>
+    </div>
+    <div class="week">${week}</div>
+    <div class="focus">
+      <div class="small" style="color:var(--fg)">Ciclo de <b>${esc(p.name)}</b></div>
+      <div class="lbl">${lbl}</div>
+      <div class="huge">${huge}</div>
+      <div class="sub">${sub}</div>
+      <button class="pill" data-edit="${focus}">Editar menstruação</button>
+    </div>
+  </div>
+  ${S.example?`<div class="card note">Estes são <b>dados de exemplo</b>. Vá em <b>Nós duas</b> para colocar os nomes e as datas reais de vocês.</div>`:""}
+  <div class="sec">
+    <h2>Conteúdo do dia · Hoje</h2>
+    <div class="rail">
+      <button class="st s1" data-edit="${focus}">Registre seus sintomas<span class="plus">+</span></button>
+      <button class="st s2 ${o==="a"?"fa":""}" data-focus="${o}">E ${esc(S[o].name)}?<span class="mid">${io.phase}</span><span class="small">dia ${io.d}</span></button>
+      <button class="st s4" data-tab="cal">Dia do ciclo<span class="drop"><span>${i.d}</span></span></button>
+      <button class="st s3" data-tab="cal">Juntas<span class="num">${sy.both}</span><span class="small">dias menstruando juntas em 90 dias</span></button>
+    </div>
+  </div>
+  <div class="card stack">
+    <div class="eyebrow">Para vocês · ${i.phase.toLowerCase()} de ${esc(p.name)}</div>
+    <div class="tips">${TIPS[i.key].map(t=>`<div class="tip"><span class="dot ${focus}" style="margin-top:7px"></span><p>${t}</p></div>`).join("")}</div>
+  </div>
+  ${lastLogs()}`;
+}
+
+function lastLogs(){
+  const items=Object.entries(S.logs).flatMap(([d,o])=>["a","b"].filter(k=>o[k]).map(k=>({d,k,v:o[k]}))).sort((x,y)=>y.d.localeCompare(x.d)).slice(0,4);
+  if(!items.length)return `<div class="card"><div class="eyebrow">Registros recentes</div><p class="small" style="margin:8px 0 0">Nada registrado ainda. Use a aba <b>Registrar</b> para anotar humor e sintomas de cada uma.</p></div>`;
+  return `<div class="card"><div class="eyebrow">Registros recentes</div><div class="log" style="margin-top:6px">${items.map(e=>`<div class="entry"><span class="dot ${e.k}" style="margin-top:7px"></span><div><b>${esc(S[e.k].name)}</b> · <span class="small">${fmt(parse(e.d))}</span><div>${[...(e.v.mood||[]),...(e.v.sym||[])].join(", ")||""}${e.v.note?` <span class="small">“${esc(e.v.note)}”</span>`:""}</div></div></div>`).join("")}</div></div>`;
+}
+
+function viewCal(){
+  const y=calMonth.getFullYear(),m=calMonth.getMonth();
+  const first=new Date(y,m,1), startW=first.getDay(), days=new Date(y,m+1,0).getDate();
+  let cells="";
+  for(let i=0;i<42;i++){
+    const d=new Date(y,m,1-startW+i); if(i>=35&&d.getMonth()!==m)break;
+    const ia=info(S.a,d),ib=info(S.b,d),k=iso(d);
+    const marks=[ia.period?'<span class="m pa"></span>':ia.fertile?'<span class="m fa"></span>':"",ib.period?'<span class="m pb"></span>':ib.fertile?'<span class="m fb"></span>':""].join("");
+    cells+=`<button class="day ${d.getMonth()!==m?"out":""} ${k===iso(today)?"today":""} ${k===selDay?"sel":""}" data-day="${k}" aria-label="${fmt(d,{day:"numeric",month:"long"})}">${d.getDate()}<span class="marks">${marks}</span></button>`;
+  }
+  const sd=parse(selDay), a=info(S.a,sd), b=info(S.b,sd), lg=S.logs[selDay]||{};
+  const line=(k,i)=>`<div class="tip"><span class="dot ${k}" style="margin-top:7px"></span><p><b>${esc(S[k].name)}</b>: ${i.phase}, dia ${i.d} do ciclo${lg[k]?`<br><span class="small">${[...(lg[k].mood||[]),...(lg[k].sym||[])].join(", ")}</span>`:""}</p></div>`;
+  return `
+  <div class="top"><div><div class="eyebrow">Calendário do casal</div><h1>${first.toLocaleDateString("pt-BR",{month:"long"})} <span class="small" style="font-family:var(--body)">${y}</span></h1></div>
+  <div style="display:flex;gap:8px"><button class="iconbtn" data-nav="-1" aria-label="Mês anterior">‹</button><button class="iconbtn" data-nav="1" aria-label="Próximo mês">›</button></div></div>
+  <div class="card">
+    <div class="grid">${["D","S","T","Q","Q","S","S"].map(w=>`<div class="wd">${w}</div>`).join("")}${cells}</div>
+    <div class="legend"><span><span class="m pa"></span>${esc(S.a.name)} menstruada</span><span><span class="m pb"></span>${esc(S.b.name)} menstruada</span><span><span class="m fa"></span><span class="m fb"></span>janela fértil</span></div>
+  </div>
+  <div class="card stack"><div class="eyebrow">${fmt(sd,{weekday:"long",day:"numeric",month:"long"})}</div>${line("a",a)}${line("b",b)}</div>
+  <p class="note">Previsões calculadas pela média do ciclo. Não servem como método contraceptivo nem diagnóstico.</p>`;
+}
+
+function viewReg(){
+  const lg=(S.logs[selDay]||{})[who]||{mood:[],sym:[],note:""};
+  return `
+  <div><div class="eyebrow">Registrar</div><h1>Como foi o dia?</h1></div>
+  <div class="seg"><button data-who="a" class="${who==="a"?"on":""}"><span class="dot a" style="display:inline-block;margin-right:6px"></span>${esc(S.a.name)}</button><button data-who="b" class="${who==="b"?"on":""}"><span class="dot b" style="display:inline-block;margin-right:6px"></span>${esc(S.b.name)}</button></div>
+  <div class="card stack">
+    <div class="field"><label for="regdate">Data</label><input type="date" id="regdate" value="${selDay}" max="${iso(today)}"></div>
+    <div><label>Humor</label><div class="tags">${MOODS.map(t=>`<button class="tag ${lg.mood.includes(t)?"on":""}" data-g="mood" data-t="${t}">${t}</button>`).join("")}</div></div>
+    <div><label>Sintomas</label><div class="tags">${SYMS.map(t=>`<button class="tag ${lg.sym.includes(t)?"on":""}" data-g="sym" data-t="${t}">${t}</button>`).join("")}</div></div>
+    <div class="field"><label for="regnote">Anotação</label><textarea id="regnote" placeholder="Ex.: dormiu mal, quis ficar em casa">${esc(lg.note||"")}</textarea></div>
+    <button class="btn" id="saveLog">Salvar registro</button>
+    <button class="btn ghost" id="startPeriod">A menstruação de ${esc(S[who].name)} começou nesta data</button>
+  </div>`;
+}
+
+function viewAj(){
+  const f=k=>`<div class="card stack"><div class="name" style="font-weight:700;display:flex;gap:8px;align-items:center"><span class="dot ${k}"></span>${k==="a"?"Você":"Sua namorada"}</div>
+    <div class="field"><label for="n${k}">Nome</label><input id="n${k}" value="${esc(S[k].name)}"></div>
+    <div class="field"><label for="s${k}">Início da última menstruação</label><input type="date" id="s${k}" value="${S[k].start}"></div>
+    <div class="row2"><div class="field"><label for="c${k}">Ciclo (dias)</label><input type="number" min="18" max="45" id="c${k}" value="${S[k].cycle}"></div>
+    <div class="field"><label for="p${k}">Menstruação (dias)</label><input type="number" min="1" max="10" id="p${k}" value="${S[k].period}"></div></div></div>`;
+  return `<div><div class="eyebrow">Nós duas</div><h1>Os ciclos de vocês</h1></div>${f("a")}${f("b")}
+  <button class="btn" id="saveCfg">Salvar</button>
+  <p class="note">Os dados ficam só neste navegador. Para cada uma ver os registros da outra no próprio celular, a próxima etapa é ligar o app a um servidor com login das duas.</p>`;
+}
+
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(t){const el=document.createElement("div");el.className="toast";el.textContent=t;document.body.appendChild(el);setTimeout(()=>el.remove(),1800)}
+
+function render(){
+  document.getElementById("app").innerHTML={hoje:viewHoje,cal:viewCal,reg:viewReg,aj:viewAj}[tab]();
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab));
+}
+
+document.addEventListener("click",e=>{
+  const t=e.target.closest("button"); if(!t)return;
+  if(t.dataset.tab){tab=t.dataset.tab;render();scrollTo(0,0);return}
+  if(t.dataset.nav){calMonth=new Date(calMonth.getFullYear(),calMonth.getMonth()+ +t.dataset.nav,1);render();return}
+  if(t.dataset.day){selDay=t.dataset.day;if(t.dataset.goto)tab=t.dataset.goto;render();scrollTo(0,0);return}
+  if(t.dataset.focus){focus=t.dataset.focus;tab="hoje";render();scrollTo(0,0);return}
+  if(t.dataset.edit){who=t.dataset.edit;selDay=iso(today);tab="reg";render();scrollTo(0,0);return}
+  if(t.dataset.who){who=t.dataset.who;render();return}
+  if(t.dataset.g){t.classList.toggle("on");return}
+  if(t.id==="saveLog"){
+    const d=document.getElementById("regdate").value||iso(today);
+    const pick=g=>[...document.querySelectorAll(`.tag.on[data-g="${g}"]`)].map(x=>x.dataset.t);
+    S.logs[d]=S.logs[d]||{}; S.logs[d][who]={mood:pick("mood"),sym:pick("sym"),note:document.getElementById("regnote").value.trim()};
+    save();toast("Registro salvo");return}
+  if(t.id==="startPeriod"){
+    S[who].start=document.getElementById("regdate").value||iso(today);S.example=false;save();toast("Ciclo de "+S[who].name+" atualizado");return}
+  if(t.id==="saveCfg"){
+    for(const k of["a","b"]){
+      S[k].name=document.getElementById("n"+k).value.trim()||(k==="a"?"Você":"Ela");
+      S[k].start=document.getElementById("s"+k).value||S[k].start;
+      S[k].cycle=Math.min(45,Math.max(18,+document.getElementById("c"+k).value||28));
+      S[k].period=Math.min(10,Math.max(1,+document.getElementById("p"+k).value||5));
+    }
+    S.example=false;save();tab="hoje";render();toast("Salvo");return}
+});
+document.addEventListener("change",e=>{if(e.target.id==="regdate"){selDay=e.target.value;render()}});
+render();
+</script>
+
+</body></html>

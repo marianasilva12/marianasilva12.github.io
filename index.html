@@ -20,6 +20,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{background:var(--ink);color:var(--fg);font:16px/1.55 var(--body);overflow-x:hidden}
@@ -609,7 +610,7 @@ var TOK=["JS","SQL","PY","C#","GIT","API"];
 function spr(m,x,y,s,map){m.forEach(function(r,j){for(var i=0;i<r.length;i++){var c=r[i];if(c===".")continue;g.fillStyle=map[c];g.fillRect(x+i*s,y+j*s,s,s)}})}
 function reset(){st={x:GW/2-18,shots:[],bugs:[],toks:[],fx:[],score:0,lives:3,level:1,t:0,spawn:0,cool:0};hud()}
 function hud(){$("#gScore").textContent=st.score;$("#gLives").textContent="♥".repeat(Math.max(st.lives,0))||"—";$("#gLevel").textContent=st.level}
-function startGame(){reset();running=true;paused=false;$("#gameOv").hidden=true;beep(523,.08);last=performance.now();requestAnimationFrame(loop);gc.focus&&gc.focus()}
+function startGame(){reset();running=true;paused=false;$("#gameOv").hidden=true;if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();keys={};beep(523,.08);last=performance.now();requestAnimationFrame(loop);gc.focus&&gc.focus()}
 function over(){running=false;if(st.score>best){best=st.score;store("cacabugs-best",String(best));$("#gBest").textContent=best}
   $("#ovTitle").textContent="SLA ESTOURADO!";$("#ovText").textContent="Você resolveu "+st.score+" chamados. "+(st.score>=30?"Nível N2 confirmado.":"Faça 30 para virar plantonista N2.");
   $("#gameStart").textContent="NOVO PLANTÃO";$("#gameOv").hidden=false;beep(200,.3,"sawtooth")}

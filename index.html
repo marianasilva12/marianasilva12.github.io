@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Mariana Arcade</title>
-<meta name="description" content="Portfólio gamer de Mariana Silva, desenvolvedora.">
+<meta name="description" content="Portfólio gamer de Mariana de Sousa Silva: Analista de Suporte e Desenvolvedora Júnior.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@400;500;600;700&family=VT323&display=swap">
@@ -237,9 +237,9 @@ body.party .hero h1{animation:hue 1.2s linear infinite}
   <section class="hero" id="start" aria-label="Jogadora">
     <div>
       <div class="insert">▶ INSERT COIN · PLAYER 1</div>
-      <h1>Mariana<span>Silva</span></h1>
-      <div class="role" aria-live="polite"><span id="role">Desenvolvedora</span><span class="cur"></span></div>
-      <p class="sum">Desenvolvedora com experiência em sistemas corporativos e ERP: fecho chamados dentro do SLA e caço bugs com análise de logs e SQL. Graduanda em Ciência da Computação, construindo apps web com JavaScript, Node.js e APIs REST. A formação em Biomedicina me deu olhar analítico, organização e atenção a detalhes.</p>
+      <h1>Mariana<span>de Sousa Silva</span></h1>
+      <div class="role" aria-live="polite"><span id="role">Analista de Suporte</span><span class="cur"></span></div>
+      <p class="sum">Profissional de TI que sustenta sistemas corporativos e ERP, fecha chamados dentro do SLA e caça bugs com análise de logs e SQL. Graduanda em Ciência da Computação, construindo apps web com JavaScript, Node.js e APIs REST. A formação em Biomedicina me deu olhar analítico, organização e atenção a detalhes.</p>
       <div class="btns">
         <button class="btn" id="pressStart">PRESS START</button>
         <a class="btn alt" href="#fases">VER FASES</a>
@@ -252,7 +252,7 @@ body.party .hero h1{animation:hue 1.2s linear infinite}
         <div>
           <div class="p1">P1 · READY</div>
           <div class="pname">MARIANA</div>
-          <div class="plv">Classe: Desenvolvedora</div>
+          <div class="plv">Classe: Suporte / Dev Jr.</div>
         </div>
       </div>
       <dl class="stats">
@@ -356,7 +356,7 @@ body.party .hero h1{animation:hue 1.2s linear infinite}
     </div>
   </section>
 </main>
-<footer class="wrap">© 2026 Mariana Silva · feito com HTML, CSS, JavaScript e muito café ☕ · GAME OVER? nunca.</footer>
+<footer class="wrap">© 2026 Mariana de Sousa Silva · feito com HTML, CSS, JavaScript e muito café ☕ · GAME OVER? nunca.</footer>
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
 <script>
@@ -449,7 +449,7 @@ if(!reduce)setInterval(function(){drawAv(true);setTimeout(function(){drawAv(fals
 var avClicks=0;av.addEventListener("click",function(){avClicks++;beep(440+avClicks*80,.06);if(avClicks>=5)unlock("avatar")});
 
 /* ---------- papel digitando ---------- */
-var ROLES=["Desenvolvedora","Desenvolvedora Júnior","Caçadora de bugs","SQL & Troubleshooting","Futura cientista da computação"];
+var ROLES=["Analista de Suporte","Desenvolvedora Júnior","Caçadora de bugs","SQL & Troubleshooting","Futura cientista da computação"];
 var ri=0,ci=ROLES[0].length,del=true,roleEl=$("#role");
 if(!reduce)setTimeout(function tick(){var w=ROLES[ri];
   if(del){ci--;if(ci<=0){del=false;ri=(ri+1)%ROLES.length}}else{ci++;if(ci>=ROLES[ri].length){del=true;roleEl.textContent=ROLES[ri];return setTimeout(tick,1800)}}
@@ -557,7 +557,7 @@ var out=$("#out"),tin=$("#tin");
 function line(h,c){var d=document.createElement("div");if(c)d.className=c;d.innerHTML=h;out.appendChild(d);out.scrollTop=out.scrollHeight}
 var CMDS={
  help:function(){line('Comandos disponíveis:','w');line('  whoami      quem é a player\n  skills      inventário completo\n  projetos    lista de fases\n  quests      experiência\n  contato     como me chamar\n  play        abre o Caça-Bugs\n  SELECT * FROM skills;   tente SQL\n  sudo contratar          …\n  matrix · coffee · ls · clear','m')},
- whoami:function(){line('Mariana Silva','g');line('Desenvolvedora · Analista de Suporte @ Sennda Software\nGraduanda em Ciência da Computação (IBMR) · Rio de Janeiro, RJ')},
+ whoami:function(){line('Mariana de Sousa Silva','g');line('Analista de Suporte @ Sennda Software · Desenvolvedora Júnior\nGraduanda em Ciência da Computação (IBMR) · Rio de Janeiro, RJ')},
  skills:function(){INV.forEach(function(g){line('<span class="p">['+esc(g[0])+']</span> '+esc(g[2].join(" · ")))})},
  projetos:function(){P.forEach(function(p,i){line('<span class="g">'+String(i+1).padStart(2,"0")+'</span> '+esc(p.n)+' <span class="m">— '+esc(p.g)+' ['+STL[p.s]+']</span>')})},
  quests:function(){Q.forEach(function(q){line('<span class="g">'+esc(q[0])+'</span>  '+esc(q[3])+' <span class="m">@ '+esc(q[4])+'</span>')})},
